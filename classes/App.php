@@ -29,17 +29,20 @@
     }
 
     // handling lodges
+    public function getLodge($id){
+        return $this->crud->read($this->settings->tables_lodges, 'lodge_id', $id);
+    }    
     public function getLodges(){
             return $this->crud->readSQL($this->settings->sql_getlodges);
     }
     public function createLodge($postdata){
             return $this->crud->create( $this->settings->tables_lodges, $postdata);
     }
-    public function updateLodge($lodgeid, $postdata){
-            return $this->crud->update( $this->settings->tables_lodges, $postdata, 'lodge_id', $lodgeid);
+    public function updateLodge($id, $postdata){
+            return $this->crud->update( $this->settings->tables_lodges, $postdata, 'lodge_id', $id);
     }
-    public function deleteLodge($lodgeid){
-            return $this->crud->delete($this->settings->tables_lodges, 'video_id', $lodgeid);
+    public function deleteLodge($id){
+            return $this->crud->delete($this->settings->tables_lodges, 'lodge_id', $id);
     }
     // reservations
     public function getReservations(){
@@ -54,13 +57,13 @@
     public function deleteReservation($id){
             return $this->crud->delete($this->settings->tables_reservations, 'reservation_id', $id);
     }    
-    public function getReservationsForClient($clientid){
+    public function getReservationsForClient($id){
             $sql = $this->settings->sql_getreservationsforclient;
-            $sql = str_replace('{clientid}', $clientid, $sql);             
+            $sql = str_replace('{clientid}', $id, $sql);             
             return $this->crud->readSQL($sql);
     }
-    public function getReservationsForLodge($lodgeid){
-        $sql = str_replace('{lodgeid}', $lodgeid, $this->settings->sql_getreservationsforlodge);           
+    public function getReservationsForLodge($id){
+        $sql = str_replace('{lodgeid}', $id, $this->settings->sql_getreservationsforlodge);           
         return $this->crud->readSQL($sql);   
     }
 
@@ -71,11 +74,11 @@
     public function createClient($postdata){
             return $this->crud->create( $this->settings->tables_clients, $postdata);
     }
-    public function updateClient($clientid, $postdata){
-            return $this->crud->update( $this->settings->tables_clients, $postdata, 'client_id', $clientid);
+    public function updateClient($id, $postdata){
+            return $this->crud->update( $this->settings->tables_clients, $postdata, 'client_id', $id);
     }
-    public function deleteClient($clientid){
-            return $this->crud->delete($this->settings->tables_playlists, 'client_id', $clientid);
+    public function deleteClient($id){
+            return $this->crud->delete($this->settings->tables_playlists, 'client_id', $id);
     }
         
  } // class App end 

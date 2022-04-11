@@ -107,12 +107,15 @@ class settings {
                                         ORDER BY r.reservation_id DESC;";
                 									
         public $sql_getreservationsforclient = "SELECT 
-                                                           * 
-                                                    FROM 
-                                                          `reservations` 
-        											WHERE 
-        											      client_id={clientid} 
-        											ORDER BY reservation_id DESC;";
+                                                    r.*, l.name AS lodge, t.name AS town
+                                                FROM
+                                                    `reservations` r
+                                                        INNER JOIN
+                                                    `lodges` l ON r.lodge_id = l.lodge_id
+                                                        INNER JOIN
+                                                    `towns` t ON t.town_id = l.town_id
+                                                 WHERE r.client_id={clientid} 
+        										 ORDER BY r.reservation_id DESC;";
         											
         public $sql_getreservationsforlodge = "SELECT 
                                                     r.entrydate,
