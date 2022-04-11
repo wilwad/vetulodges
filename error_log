@@ -1,9 +1,0 @@
-[10-Apr-2022 22:28:14 America/Chicago] PHP Warning:  mysqli::mysqli(): (HY000/1045): Access denied for user 'goodnesz_vetu'@'localhost' (using password: YES) in /home1/goodnez/public_html/vetulodges/classes/CRUD.php on line 21
-[10-Apr-2022 22:28:14 America/Chicago] PHP Fatal error:  Class 'Error' not found in /home1/goodnez/public_html/vetulodges/classes/CRUD.php on line 23
-[10-Apr-2022 22:39:57 America/Chicago] PHP Notice:  Undefined index: summary in /home1/goodnez/public_html/vetulodges/views/home.php on line 36
-[10-Apr-2022 22:39:57 America/Chicago] PHP Notice:  Undefined index: summary in /home1/goodnez/public_html/vetulodges/views/home.php on line 36
-[10-Apr-2022 22:39:57 America/Chicago] PHP Notice:  Undefined index: summary in /home1/goodnez/public_html/vetulodges/views/home.php on line 36
-[10-Apr-2022 22:39:57 America/Chicago] PHP Notice:  Undefined index: summary in /home1/goodnez/public_html/vetulodges/views/home.php on line 36
-[10-Apr-2022 22:39:57 America/Chicago] PHP Notice:  Undefined index: summary in /home1/goodnez/public_html/vetulodges/views/home.php on line 36
-[11-Apr-2022 07:31:59 America/Chicago] PHP Notice:  Undefined variable: eid in /home1/goodnez/public_html/vetulodges/classes/App.php on line 52
-[11-Apr-2022 07:32:32 America/Chicago] PHP Notice:  Undefined variable: eid in /home1/goodnez/public_html/vetulodges/classes/App.php on line 52
