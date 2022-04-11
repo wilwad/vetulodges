@@ -2,8 +2,7 @@
   require('classes/settings.php');
   require('classes/CRUD.php');
   require('classes/CForm.php');  
-  require('classes/App.php');
-  
+  require('classes/App.php');  
   $settings = new settings();
   
   if ( $settings->showPHPerrors ){

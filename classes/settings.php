@@ -8,11 +8,13 @@ class settings {
         
         // database connection
         public $database_host  = 'localhost';
-        public $database_name  = 'goodnez_vetulodges';
-        public $database_user  = 'goodnez_vetu';
-        public $database_pwd   = 'q!CyCn3(DT{q';
+        public $database_name  = 'vetulodges';
+        public $database_user  = 'vetu';
+        public $database_pwd   = '';
 
+        // misc
         public $uploaddir      = 'uploads/';
+
          // tables
         public $tables_lodges  = 'lodges';
         public $tables_clients = 'clients';
@@ -20,8 +22,7 @@ class settings {
         public $tables_reservations = 'reservations';
         public $tables_towns   = 'towns';        
                                 
-         // errors
-         
+         // errors         
         public $error_nolodges       = "No lodges found.";
         public $error_noclients      = "No clients found.";
         public $error_noreservations = "No reservations found.";
@@ -46,19 +47,18 @@ class settings {
         public $html_hr             = '<HR>';
         public $html_slash          = ' / ';
         public $html_p              = '<p></p>';  
-        public $html_hint_autoplay  = '<p>Play one video and the rest will auto-play thereafter</p>';  
         public $html_searchbox = "<input name='term' style='padding:10px; width: 80vw' maxlength=200 placeholder='Enter something to search the list'>";
 		        
         // actions
-        public $html_actions_lodges = "<a href='?view=lodges&action=details&id={lodgeid}'>Details</a> /
-                                        <a href='?view=lodges&action=edit&id={lodgeid}'>Edit</a> /
+        public $html_actions_lodges = "<a href='?view=lodges&action=details&id={lodgeid}'>Details</a> &middot;
+                                        <a href='?view=lodges&action=edit&id={lodgeid}'>Edit</a> &middot;
 						                <a href='#' onclick='return confirmDelete({lodgeid})'>Delete</a>";
 
-        public $html_actions_reservations = "<a href='?view=reservations&action=edit&id={reservationid}'>Edit</a> /
+        public $html_actions_reservations = "<a href='?view=reservations&action=edit&id={reservationid}'>Edit</a> &middot;
 						                <a href='#' onclick='return confirmDelete({reservationid})'>Delete</a>";
 						                
-        public $html_actions_clients = "<a href='?view=clients&action=details&id={clientid}'>Details</a> /
-										<a href='?view=clients&action=edit&id={clientid}'>Edit</a> /
+        public $html_actions_clients = "<a href='?view=clients&action=details&id={clientid}'>Details</a> &middot;
+										<a href='?view=clients&action=edit&id={clientid}'>Edit</a> &middot;
 										<a href='#' onclick='return confirmDelete({clientid});'>Delete</a>";
 
         // font awesome icons
@@ -72,7 +72,7 @@ class settings {
 
 		// SQL
         public $sql_getlodges  = "SELECT 
-										lodge_id,
+										l.lodge_id,
 										l.name,
 										t.name AS town,
 										l.telephone,
@@ -82,10 +82,8 @@ class settings {
 										l.picture,
 										l.summary
 									FROM
-										lodges l,
-										towns t
-                                    WHERE
-                                        l.town_id = t.town_id
+										`lodges` l
+									INNER JOIN `towns` t ON l.town_id = t.town_id
 									ORDER BY l.name ASC;";
 																
         public $sql_getclients = "SELECT 
@@ -94,22 +92,19 @@ class settings {
 									ORDER BY `name` ASC;";
 		
 		public $sql_getreservations = "SELECT 
-												r.reservation_id,
-												r.entrydate,
-												c.name AS client,
-												l.name AS lodge,
-												r.date_checkin AS `Arrive`,
-												r.date_checkout AS `Leave`,
-												r.number_adults As adults,
-												r.number_children AS kids
-                                    FROM reservations r,
-                                        clients c,
-                                        lodges l
-                                    WHERE
-                                        c.client_id = r.client_id AND
-                                        l.lodge_id = r.lodge_id
-                                    ORDER BY 
-                                            r.reservation_id DESC;";
+                                            r.reservation_id,
+                                            r.entrydate,
+                                            c.name AS client,
+                                            l.name AS lodge,
+                                            r.date_checkin AS `Arrive`,
+                                            r.date_checkout AS `Leave`,
+                                            r.number_adults AS adults,
+                                            r.number_children AS kids
+                                        FROM
+                                            reservations r
+                                        INNER JOIN clients c ON c.client_id = r.client_id
+                                        INNER JOIN lodges l ON l.lodge_id = r.lodge_id
+                                        ORDER BY r.reservation_id DESC;";
                 									
         public $sql_getreservationsforclient = "SELECT 
                                                            * 
@@ -120,43 +115,18 @@ class settings {
         											ORDER BY reservation_id DESC;";
         											
         public $sql_getreservationsforlodge = "SELECT 
-                                                           r.entrydate,
-                                                           c.name as client,
-                                                           l.name as lodge,
-                                                           date_checkin AS `Arrive`,
-                                                           date_checkout AS `Leave`,                                                           
-                                                           number_adults as adults,
-                                                           number_children as children
-                                                    FROM 
-                                                          `reservations` r,
-                                                          clients c,
-                                                          lodges l
-        											WHERE 
-        											      r.client_id = c.client_id AND
-        											      l.lodge_id = r.reservation_id
-        											ORDER BY reservation_id DESC;";
-        											
-        public $sql_getvideosforplaylist = "SELECT 
-                                            	psid, 
-                                            	c.video_id,
-                                            	title AS `Title`,
-                                            	url
-											FROM 
-											     videos c, 
-											     playlistsvideos cc 
-											WHERE 
-											     cc.playlist_id={playlistid} 
-											AND 
-											     cc.video_id = c.video_id;";       
-												 
-		public $sql_getplaylistsforvideo = "SELECT 
-												 c.playlist_id, 
-												 c.title As `Title`
-											 FROM 
-												  playlists c, 
-												  playlistsvideos cc 
-											 WHERE 
-												  cc.playlist_id=c.playlist_id
-											 AND 
-												  cc.video_id = {videoid};";       												 
+                                                    r.entrydate,
+                                                    c.name AS client,
+                                                    l.name AS lodge,
+                                                    date_checkin AS `Arrive`,
+                                                    date_checkout AS `Leave`,
+                                                    number_adults AS adults,
+                                                    number_children AS children
+                                                FROM
+                                                    `reservations` r
+                                                        INNER JOIN
+                                                    clients c ON r.client_id = c.client_id
+                                                        INNER JOIN
+                                                    lodges l ON l.lodge_id = r.reservation_id
+                                                ORDER BY reservation_id DESC;";    												 
  }
